@@ -9,11 +9,11 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
         <style> .tns-controls,.tns-nav,.tns-liveregion{ display: none; } .tns-outer{ /*
         position:absolute */ } </style> -->
-            <style>
-                .button-holder{
-                    text-align: center;
-                }
-            </style>
+        <style>
+            .button-holder {
+                text-align: center;
+            }
+        </style>
     </head>
     <body>
         <!-- <div class="my-slider" id="my-slider"></div> -->
@@ -23,7 +23,7 @@
         -->
 
         <div class="button-holder">
-            <input type="button" id="snapshot" value="capture" />
+            <!-- <input type="button" id="snapshot" value="capture" /> -->
         </div>
 
         <script
@@ -233,16 +233,10 @@
 
                 object.position.x = 0;
                 object.position.y = 0;
-                object.position.z = -3;
-
-                // object.position.x = (i - textures.length / 2) * 1.1; object.position.x =
-                // Math.random() * 5 - 3; object.position.y = Math.random()
-                // * 4; object.position.z = Math.random() * 5 - 3; object.rotation.x =
-                // Math.random() * 2 * Math.PI; object.rotation.y = Math.random() * 2 * Math.PI;
-                // object.rotation.z = Math.random() * 2 * Math.PI; object     .scale
-                // .setScalar(Math.random() + 0.5);
 
                 group.add(object);
+
+                group.position.z = -3;
 
                 //
 
@@ -292,9 +286,13 @@
 
             }
 
+            var myTimeOut = null;
+
             function onSelectStart(event) {
 
                 const controller = event.target;
+
+                console.log('selectStart')
 
                 const intersections = getIntersections(controller);
 
@@ -304,9 +302,18 @@
 
                     const object = intersection.object;
                     // object.material.emissive.b = 1;
-                    controller.attach(object);
 
-                    controller.userData.selected = object;
+                    if (myTimeOut == null) {
+                        myTimeOut = setTimeout(() => {
+
+                            console.log('selected')
+
+                            controller.attach(object);
+
+                            controller.userData.selected = object;
+
+                        }, 1000)
+                    }
 
                 }
 
@@ -315,6 +322,13 @@
             function onSelectEnd(event) {
 
                 const controller = event.target;
+
+                console.log('selectEnd')
+
+                if (myTimeOut != null) {
+                    clearTimeout(myTimeOut);
+                    myTimeOut = null;
+                }
 
                 if (controller.userData.selected !== undefined) {
 
@@ -400,9 +414,7 @@
 
             }
 
-            document.getElementById('snapshot').onclick=()=>{
-                takeScreenshot();
-            }
+            // document.getElementById('snapshot').onclick=()=>{     takeScreenshot(); }
 
             function takeScreenshot() {
 
