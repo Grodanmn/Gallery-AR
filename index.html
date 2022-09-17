@@ -247,9 +247,19 @@
                 renderer.xr.enabled = true;
                 container.appendChild(renderer.domElement);
 
+                var arButton = ARButton.createButton(renderer, {
+                    requiredFeatures: ['hit-test'],
+                    optionalFeatures: [
+                        'dom-overlay', 'dom-overlay-for-handheld-ar'
+                    ],
+                    domOverlay: {
+                        root: document.body
+                    }
+                });
+
                 document
                     .body
-                    .appendChild(ARButton.createButton(renderer));
+                    .appendChild(arButton);
 
                 // controllers
 
@@ -308,6 +318,12 @@
 
                             console.log('selected')
 
+                            const scalee = 1.2;
+
+                            object
+                                .scale
+                                .set(scalee, scalee, scalee);
+
                             controller.attach(object);
 
                             controller.userData.selected = object;
@@ -333,7 +349,11 @@
                 if (controller.userData.selected !== undefined) {
 
                     const object = controller.userData.selected;
-                    // object.material.emissive.b = 0;
+
+                    object
+                        .scale
+                        .set(1, 1, 1);
+
                     group.attach(object);
 
                     controller.userData.selected = undefined;
