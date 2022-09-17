@@ -171,7 +171,7 @@
                 });
             });
 
-            var selectedIndex = 8;
+            var selectedIndex = 3;
 
             function init(textures) {
 
@@ -230,6 +230,10 @@
                     textMaterial,
                     textMaterial
                 ]);
+
+                object.position.x = 0;
+                object.position.y = 0;
+                object.position.z = -3;
 
                 // object.position.x = (i - textures.length / 2) * 1.1; object.position.x =
                 // Math.random() * 5 - 3; object.position.y = Math.random()
@@ -299,7 +303,7 @@
                     const intersection = intersections[0];
 
                     const object = intersection.object;
-                    object.material.emissive.b = 1;
+                    // object.material.emissive.b = 1;
                     controller.attach(object);
 
                     controller.userData.selected = object;
@@ -315,7 +319,7 @@
                 if (controller.userData.selected !== undefined) {
 
                     const object = controller.userData.selected;
-                    object.material.emissive.b = 0;
+                    // object.material.emissive.b = 0;
                     group.attach(object);
 
                     controller.userData.selected = undefined;
@@ -359,7 +363,7 @@
                     const intersection = intersections[0];
 
                     const object = intersection.object;
-                    object.material.emissive.r = 1;
+                    // object.material.emissive.r = 1;
                     intersected.push(object);
 
                 }
@@ -371,7 +375,7 @@
                 while (intersected.length) {
 
                     const object = intersected.pop();
-                    object.material.emissive.r = 0;
+                    // object.material.emissive.r = 0;
 
                 }
 
